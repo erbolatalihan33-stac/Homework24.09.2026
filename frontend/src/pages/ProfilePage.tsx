@@ -1,6 +1,72 @@
+
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authService, orderService } from '../services/api'
 import type { Order, User } from '../types'
 
-export default function ProfilePage() { const navigate = useNavigate(); const [user, setUser] = useState<User | null>(null); const [orders, setOrders] = useState<Order[]>([]); useEffect(() => { if (!localStorage.getItem('store_token')) return; authService.me().then((response) => setUser(response.data)); orderService.list().then((response) => setOrders(response.data)) }, []); if (!localStorage.getItem('store_token')) return <main className="center-state"><h2>Войдите, чтобы открыть профиль</h2><Link to="/login">Войти</Link></main>; function logout() { localStorage.removeItem('store_token'); localStorage.removeItem('store_user'); navigate('/') } return <main className="page"><div className="profile-head"><div><p className="eyebrow">Личный кабинет</p><h1>{user?.username || 'Профиль'}</h1><p>{user?.email}</p></div><button className="text-button" onClick={logout}>Выйти</button></div><section className="orders"><h2>История заказов</h2>{orders.length ? orders.map((order) => <article className="order-card" key={order.id}><div><strong>Заказ №{order.id}</strong><p>{new Date(order.created_at).toLocaleDateString('ru-RU')} · {order.status}</p></div><strong>{Number(order.total_price).toLocaleString('ru-RU')} ₽</strong></article>) : <p>Заказов пока нет.</p>}</section></main> }
+// # AI-ASSISTED: ChatGPT
+export default function ProfilePage() {
+	const navigate = useNavigate()
+	const [user, setUser] = useState<User | null>(null)
+	const [orders, setOrders] = useState<Order[]>([])
+	const isAuthenticated = Boolean(localStorage.getItem('store_token'))
+
+	useEffect(() => {
+		if (!isAuthenticated) {
+			return
+		}
+
+		authService.me().then((response) => setUser(response.data))
+		orderService.list().then((response) => setOrders(response.data))
+	}, [isAuthenticated])
+
+	if (!isAuthenticated) {
+		return (
+			<main className="center-state">
+				<h2>Войдите, чтобы открыть профиль</h2>
+				<Link to="/login">Войти</Link>
+			</main>
+		)
+	}
+
+	function logout() {
+		localStorage.removeItem('store_token')
+		localStorage.removeItem('store_user')
+		navigate('/')
+	}
+
+	return (
+		<main className="page">
+			<div className="profile-head">
+				<div>
+					<p className="eyebrow">Личный кабинет</p>
+					<h1>{user?.username || 'Профиль'}</h1>
+					<p>{user?.email}</p>
+				</div>
+				<button className="text-button" onClick={logout}>
+					Выйти
+				</button>
+			</div>
+
+			<section className="orders">
+				<h2>История заказов</h2>
+				{orders.length ? (
+					orders.map((order) => (
+						<article className="order-card" key={order.id}>
+							<div>
+								<strong>Заказ №{order.id}</strong>
+								<p>
+									{new Date(order.created_at).toLocaleDateString('ru-RU')} ·{' '}
+									{order.status}
+								</p>
+							</div>
+							<strong>{Number(order.total_price).toLocaleString('ru-RU')} ₽</strong>
+						</article>
+					))
+				) : (
+					<p>Заказов пока нет.</p>
+				)}
+			</section>
+		</main>
+	)
+}

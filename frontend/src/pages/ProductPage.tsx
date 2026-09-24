@@ -4,4 +4,66 @@ import { productService } from '../services/api'
 import { useCart } from '../context/CartContext'
 import type { Product } from '../types'
 
-export default function ProductPage() { const { id } = useParams(); const [product, setProduct] = useState<Product | null>(null); const [error, setError] = useState(''); const { add } = useCart(); useEffect(() => { if (id) productService.get(id).then((response) => setProduct(response.data)).catch(() => setError('Товар не найден')) }, [id]); if (error) return <main className="center-state"><h2>{error}</h2><Link to="/">Вернуться в каталог</Link></main>; if (!product) return <main className="center-state">Загрузка...</main>; return <main className="detail"><Link to="/" className="back">← Каталог</Link><div className="detail-grid"><div className="detail-image"><img src={product.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000'} alt={product.name} /></div><div className="detail-copy"><p className="eyebrow">{product.category_name}</p><h1>{product.name}</h1><p className="price">{Number(product.price).toLocaleString('ru-RU')} ₽</p><p className="description">{product.description}</p><p className="stock">{product.stock ? `В наличии: ${product.stock} шт.` : 'Нет в наличии'}</p><button className="primary-button" disabled={!product.stock} onClick={() => add(product)}>{product.stock ? 'Добавить в корзину' : 'Нет в наличии'}</button></div></div></main> }
+// # AI-ASSISTED: ChatGPT
+export default function ProductPage() {
+	const { id } = useParams()
+	const [product, setProduct] = useState<Product | null>(null)
+	const [error, setError] = useState('')
+	const { add } = useCart()
+
+	useEffect(() => {
+		if (id) {
+			productService
+				.get(id)
+				.then((response) => setProduct(response.data))
+				.catch(() => setError('Товар не найден'))
+		}
+	}, [id])
+
+	if (error) {
+		return (
+			<main className="center-state">
+				<h2>{error}</h2>
+				<Link to="/">Вернуться в каталог</Link>
+			</main>
+		)
+	}
+
+	if (!product) {
+		return <main className="center-state">Загрузка...</main>
+	}
+
+	return (
+		<main className="detail">
+			<Link to="/" className="back">
+				← Каталог
+			</Link>
+			<div className="detail-grid">
+				<div className="detail-image">
+					<img
+						src={product.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000'}
+						alt={product.name}
+					/>
+				</div>
+				<div className="detail-copy">
+					<p className="eyebrow">{product.category_name}</p>
+					<h1>{product.name}</h1>
+					<p className="price">
+						{Number(product.price).toLocaleString('ru-RU')} ₽
+					</p>
+					<p className="description">{product.description}</p>
+					<p className="stock">
+						{product.stock ? `В наличии: ${product.stock} шт.` : 'Нет в наличии'}
+					</p>
+					<button
+						className="primary-button"
+						disabled={!product.stock}
+						onClick={() => add(product)}
+					>
+						{product.stock ? 'Добавить в корзину' : 'Нет в наличии'}
+					</button>
+				</div>
+			</div>
+		</main>
+	)
+}
