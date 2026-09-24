@@ -1,4 +1,3 @@
-# AI-GENERATED: ChatGPT
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -6,6 +5,7 @@ from rest_framework.views import APIView
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 
 
+# AI-ASSISTED: ChatGPT
 class RegisterView(APIView):
 	permission_classes = [AllowAny]
 

@@ -1,4 +1,3 @@
-# AI-ASSISTED: ChatGPT
 from django.core.management.base import BaseCommand
 from categories.models import Category
 from products.models import Product
@@ -7,6 +6,7 @@ from products.models import Product
 class Command(BaseCommand):
     help = "Creates a small catalog for local development"
 
+    # AI-ASSISTED: ChatGPT
     def handle(self, *args, **options):
         examples = {
             "Дом": [

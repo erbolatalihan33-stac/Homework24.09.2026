@@ -1,4 +1,3 @@
-# AI-GENERATED: ChatGPT
 from django.db import transaction
 from rest_framework import serializers
 from products.models import Product
@@ -13,6 +12,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ["id", "product", "product_name", "quantity", "price"]
 
 
+# AI-GENERATED: ChatGPT
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 

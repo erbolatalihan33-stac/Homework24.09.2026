@@ -1,8 +1,8 @@
-# AI-GENERATED: ChatGPT
 from rest_framework import serializers
 from .models import Product
 
 
+# AI-ASSISTED: ChatGPT
 class ProductSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source="category.name", read_only=True)
 

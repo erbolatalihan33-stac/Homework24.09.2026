@@ -1,10 +1,10 @@
-// AI-GENERATED: ChatGPT
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { CartItem, Product } from '../types'
 
 type CartContextValue = { items: CartItem[]; count: number; total: number; add: (product: Product) => void; change: (id: number, quantity: number) => void; remove: (id: number) => void; clear: () => void }
 const CartContext = createContext<CartContextValue | null>(null)
 
+// AI-GENERATED: ChatGPT
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => JSON.parse(localStorage.getItem('store_cart') || '[]') as CartItem[])
   useEffect(() => localStorage.setItem('store_cart', JSON.stringify(items)), [items])
