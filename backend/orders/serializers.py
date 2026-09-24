@@ -12,7 +12,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ["id", "product", "product_name", "quantity", "price"]
 
 
-# AI-GENERATED: ChatGPT
+# AI-ASSISTED: ChatGPT
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
