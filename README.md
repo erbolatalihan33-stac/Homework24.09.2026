@@ -81,3 +81,8 @@ docker-compose.yml
 ## Автор
 
 Учебный проект разработчика.
+
+
+
+
+# AI-GENERATED: ChatGPT
